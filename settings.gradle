@@ -1,0 +1,6 @@
+rootProject.name='phantombox-broker'
+
+include 'phantombox-broker-api'
+include 'phantombox-broker-domain'
+include 'phantombox-broker-consumer'
+include 'phantombox-broker-producer'
