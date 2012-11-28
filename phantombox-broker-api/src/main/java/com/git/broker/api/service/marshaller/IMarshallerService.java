@@ -1,16 +1,16 @@
-package com.git.broker.api.marshaller;
+package com.git.broker.api.service.marshaller;
 
 import java.util.List;
 
 /**
- * Marshaller.
+ * Marshaller service.
  * <p/>
  * Date: 27.11.12
  * Time: 19:19
  *
  * @author rpleshkov
  */
-public interface IMarshaller {
+public interface IMarshallerService {
 
     /**
      * Coverts object to message.

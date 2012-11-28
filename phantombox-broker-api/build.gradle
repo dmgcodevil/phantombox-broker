@@ -1,0 +1,19 @@
+task loadProperties << {
+    def userProps = new Properties()
+    userProps.load(new FileInputStream("$rootProject.projectDir/gradle.properties"))
+    properties.putAll(userProps)
+}
+
+task printProperties(dependsOn: 'loadProperties') << {
+    println commonsCollectionsVersion
+}
+
+compileJava.dependsOn('loadProperties')
+
+dependencies {
+
+    compile("org.springframework:spring-jms:${springVersion}")
+    compile('org.apache.activemq:activemq-all:5.6.0')
+    compile('org.apache.activemq:activemq-pool:5.6.0')
+
+}

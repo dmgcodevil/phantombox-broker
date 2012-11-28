@@ -23,10 +23,16 @@ dependencies {
     compile("org.springframework:spring-core:${springVersion}")
     compile("org.springframework:spring-tx:${springVersion}")
     compile("org.springframework:spring-aspects:${springVersion}")
+    compile("org.springframework:spring-test:${springVersion}")
 
     compile('org.aspectj:aspectjtools:1.6.2')
     compile('org.aspectj:aspectjrt:1.6.12')
 
+    //compile('org.apache.camel:camel-core:2.9.2')
+    //compile('org.apache.camel:camel-jms:2.9.2')
+    //compile('org.apache.camel:camel-spring:2.9.2')
+
+    compile('org.apache.activemq:activemq-camel:5.6.0')
     compile("org.springframework:spring-jms:${springVersion}")
     compile('org.apache.activemq:activemq-all:5.6.0')
     compile('org.apache.activemq:activemq-pool:5.6.0')
@@ -38,4 +44,7 @@ dependencies {
     compile("commons-collections:commons-collections:${commonsCollectionsVersion}")
     compile("org.apache.commons:commons-lang3:${commonsLang3}")
     compile('commons-lang:commons-lang:2.3')
+
+    /* ---------------- test dependencies ---------------- */
+    compile('junit:junit:4.8.2')
 }

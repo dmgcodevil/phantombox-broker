@@ -1,21 +1,24 @@
-package com.git.broker.impl.marshaller;
+package com.git.broker.impl.service.marshaller.json;
 
-import com.git.broker.api.marshaller.IMarshaller;
+import com.git.broker.api.service.marshaller.IMarshallerService;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
+
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link IMarshaller} interface implementation.
+ * {@link IMarshallerService} interface implementation.
  * <p/>
  * Date: 27.11.12
  * Time: 19:27
  *
  * @author rpleshkov
  */
-public class XMLMarshaller<T> implements IMarshaller {
+@Service("jettisonMarshallerService")
+public class JettisonMarshallerService implements IMarshallerService {
 
     /**
      * {@inheritDoc}
