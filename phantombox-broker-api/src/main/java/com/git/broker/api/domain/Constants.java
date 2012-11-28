@@ -1,7 +1,7 @@
 package com.git.broker.api.domain;
 
 /**
- * Enter class description.
+ * Constants.
  * <p/>
  * Date: 28.11.12
  * Time: 12:11
@@ -19,5 +19,18 @@ public class Constants {
      */
     public static final String CLASS_NAME_PROPERTY = "className";
 
+    /**
+     * CONTACT_ID_PROPERTY.
+     */
     public static final String CONTACT_ID_PROPERTY = "contactId";
+
+    /**
+     * CALL_REQUEST_QUEUE.
+     */
+    public static final String CALL_REQUEST_QUEUE = "call.request.queue";
+
+    /**
+     * CALL_RESPONSE_QUEUE.
+     */
+    public static final String CALL_RESPONSE_QUEUE = "call.response.queue";
 }

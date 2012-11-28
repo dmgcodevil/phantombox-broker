@@ -1,7 +1,7 @@
 package com.git.broker.api.domain;
 
 /**
- * Enter class description.
+ * Response.
  * <p/>
  * Date: 28.11.12
  * Time: 21:06
@@ -10,6 +10,8 @@ package com.git.broker.api.domain;
  */
 public interface IResponse {
 
-    public void action();
+    ResponseType getType();
+
+    void setType(ResponseType type);
 
 }

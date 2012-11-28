@@ -32,7 +32,7 @@
 
 
     <jms:listener-container connection-factory="connectionFactory" acknowledge="auto">
-        <jms:listener destination="call.queue" ref="callConsumerService"
+        <jms:listener destination="call.request.queue" ref="callConsumerService"
                       selector="contactId=${contact.contactId}"/>
     </jms:listener-container>
 </beans>

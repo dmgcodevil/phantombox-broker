@@ -1,5 +1,7 @@
 package com.git.broker.api.service.consumer;
 
+import com.git.broker.api.domain.IResponseCallbackAction;
+
 import java.util.Map;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -12,6 +14,9 @@ import javax.jms.MessageListener;
  *
  * @author rpleshkov
  */
-public interface ICallConsumerService  extends MessageListener {
+public interface ICallConsumerService extends MessageListener {
 
+    IResponseCallbackAction getResponseCallbackAction();
+
+    void setResponseCallbackAction(IResponseCallbackAction responseCallbackAction);
 }
