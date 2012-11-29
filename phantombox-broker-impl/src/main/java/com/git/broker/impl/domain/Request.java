@@ -1,7 +1,6 @@
 package com.git.broker.impl.domain;
 
-import com.git.broker.api.domain.IResponse;
-import com.git.broker.api.domain.ResponseType;
+import com.git.broker.api.domain.IRequest;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -9,19 +8,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * {@link IResponse} interface implementation.
+ * {@link IRequest} interface implementation.
  * <p/>
- * User: dmgcodevil
- * Date: 11/28/12
- * Time: 5:03 PM
+ * Date: 29.11.12
+ * Time: 12:34
+ *
+ * @author rpleshkov
  */
-public class Response implements IResponse {
+public class Request implements IRequest {
 
     private String correlationId;
 
-    private ResponseType type;
-
-    private String message;
+    private String subscriberName;
 
     private Map<String, String> properties = new HashMap();
 
@@ -41,36 +39,22 @@ public class Response implements IResponse {
         this.correlationId = correlationId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ResponseType getType() {
-        return type;
-    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setType(ResponseType type) {
-        this.type = type;
+    public String getSubscriberName() {
+        return subscriberName;
     }
+
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getMessage() {
-        return message;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setMessage(String message) {
-        this.message = message;
+    public void setSubscriberName(String subscriberName) {
+        this.subscriberName = subscriberName;
     }
 
     /**
@@ -96,8 +80,7 @@ public class Response implements IResponse {
     public String toString() {
         return new ToStringBuilder(this)
             .append("correlationId", correlationId)
-            .append("type", type)
-            .append("message", message)
+            .append("subscriberName", subscriberName)
             .append("properties", properties)
             .toString();
     }

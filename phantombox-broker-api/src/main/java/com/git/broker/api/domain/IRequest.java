@@ -3,14 +3,14 @@ package com.git.broker.api.domain;
 import java.util.Map;
 
 /**
- * Response.
+ * Request.
  * <p/>
- * Date: 28.11.12
- * Time: 21:06
+ * Date: 29.11.12
+ * Time: 12:24
  *
  * @author rpleshkov
  */
-public interface IResponse {
+public interface IRequest {
 
     /**
      * Gets correlation id.
@@ -26,34 +26,19 @@ public interface IResponse {
      */
     void setCorrelationId(String correlationId);
 
+    /**
+     * Gets subscriber name.
+     *
+     * @return correlation id
+     */
+    String getSubscriberName();
 
     /**
-     * Gets type.
+     * Sets subscriber name.
      *
-     * @return {@link ResponseType}
+     * @param subscriberName subscriber name
      */
-    ResponseType getType();
-
-    /**
-     * Sets type.
-     *
-     * @param type {@link ResponseType}
-     */
-    void setType(ResponseType type);
-
-    /**
-     * Gets message.
-     *
-     * @return message
-     */
-    String getMessage();
-
-    /**
-     * Sets message.
-     *
-     * @param message message
-     */
-    void setMessage(String message);
+    void setSubscriberName(String subscriberName);
 
     /**
      * Gets properties.
@@ -65,7 +50,7 @@ public interface IResponse {
     /**
      * Sets properties.
      *
-     * @param properties properties
+     * @param properties properties.
      */
     void setProperties(Map<String, String> properties);
 }

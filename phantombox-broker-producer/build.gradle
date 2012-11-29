@@ -1,4 +1,0 @@
-dependencies {
-    compile project(':phantombox-broker-api')
-	compile project(':phantombox-broker-domain')
-}

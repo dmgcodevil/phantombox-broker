@@ -1,38 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jms="http://www.springframework.org/schema/jms"
-       xmlns:amq="http://activemq.apache.org/schema/core"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
-                           http://www.springframework.org/schema/context
-                           http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/jms
-                           http://www.springframework.org/schema/jms/spring-jms.xsd
-                           http://activemq.apache.org/schema/core
-                           http://activemq.apache.org/schema/core/activemq-core.xsd">
+                           http://www.springframework.org/schema/jms/spring-jms.xsd">
 
-    <context:component-scan base-package="com.git.broker.impl.service"/>
-    <context:annotation-config/>
 
-    <bean id="propertyConfigurer"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-          p:location="classpath:/config/contact.properties"/>
-
-    <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-        <property name="brokerURL">
-            <value>tcp://localhost:61616</value>
-        </property>
-    </bean>
-
-    <bean id="callConsumerService"
-          class="com.git.broker.impl.service.consumer.CallConsumerService"/>
+    <bean id="consumerService"
+          class="com.git.broker.impl.service.consumer.ConsumerService"/>
 
 
     <jms:listener-container connection-factory="connectionFactory" acknowledge="auto">
-        <jms:listener destination="call.request.queue" ref="callConsumerService"
+        <jms:listener destination="call.request.queue" ref="consumerService"
                       selector="contactId=${contact.contactId}"/>
     </jms:listener-container>
+
 </beans>
