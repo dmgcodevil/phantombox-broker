@@ -1,5 +1,7 @@
 package com.git.broker.api.service.consumer;
 
+import com.git.broker.api.domain.IResponse;
+
 import javax.jms.MessageListener;
 
 /**
@@ -12,4 +14,10 @@ import javax.jms.MessageListener;
  */
 public interface IConsumerService extends MessageListener {
 
+    /**
+     * Sends response.
+     *
+     * @param response {@link IResponse}
+     */
+    void sendResponse(IResponse response);
 }

@@ -17,4 +17,12 @@ public interface IRequestCallback {
      */
     void request(IRequest request, IResponseCallback responseCallback);
 
+    /**
+     * Request.
+     *
+     * @param request  {@link IRequest}
+     * @param mediator {@link IMediator}
+     */
+    void request(IRequest request, IMediator mediator);
+
 }

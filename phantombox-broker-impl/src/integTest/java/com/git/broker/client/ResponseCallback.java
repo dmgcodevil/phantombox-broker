@@ -1,5 +1,6 @@
 package com.git.broker.client;
 
+import com.git.broker.api.domain.IMediator;
 import com.git.broker.api.domain.IResponse;
 import com.git.broker.api.domain.IResponseCallback;
 import com.git.broker.api.domain.ResponseType;
@@ -30,4 +31,5 @@ public class ResponseCallback implements IResponseCallback {
             LOGGER.info("Bye!!!");
         }
     }
+
 }

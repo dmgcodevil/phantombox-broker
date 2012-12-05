@@ -2,6 +2,7 @@ package com.git.broker.impl.service.producer;
 
 import static com.git.broker.api.domain.Constants.CALL_REQUEST_QUEUE;
 import static com.git.broker.api.domain.Constants.CALL_RESPONSE_QUEUE;
+import com.git.broker.api.domain.IMediator;
 import com.git.broker.api.domain.IRequest;
 import com.git.broker.api.domain.IResponse;
 import com.git.broker.api.domain.IResponseCallback;
@@ -40,8 +41,10 @@ public class ProducerService implements IProducerService {
     @Autowired
     private JmsTemplate jmsTemplate;
 
-    @Autowired
-    private IResponseCallback responseCallback;
+    private IMediator mediator;
+
+    //@Autowired
+    //private IResponseCallback responseCallback;
 
     private static final Logger LOGGER = Logger.getLogger(ProducerService.class);
 
@@ -60,7 +63,7 @@ public class ProducerService implements IProducerService {
             Message message = jmsTemplate.receiveSelected(CALL_RESPONSE_QUEUE,
                 buildSelector(request.getCorrelationId()));
             response = messageCreatorFactory.getResponse(message);
-            responseCallback.response(response);
+            mediator.reply(response);
         } else {
             throw new IllegalArgumentException("request for sending can't be null.");
         }

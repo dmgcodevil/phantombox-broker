@@ -1,6 +1,7 @@
 package com.git.broker.impl.service.consumer;
 
 import static com.git.broker.api.domain.Constants.CALL_RESPONSE_QUEUE;
+import com.git.broker.api.domain.IMediator;
 import com.git.broker.api.domain.IRequest;
 import com.git.broker.api.domain.IRequestCallback;
 import com.git.broker.api.domain.IResponse;
@@ -40,23 +41,8 @@ public class ConsumerService implements IConsumerService {
     @Autowired
     private IMessageCreatorFactory messageCreatorFactory;
 
-    @Autowired
-    private IRequestCallback requestCallback;
+    private IMediator mediator;
 
-    private IResponseCallback responseCallback;
-
-
-    @PostConstruct
-    private void init() {
-        responseCallback = new IResponseCallback() {
-            @Override
-            public void response(IResponse response) {
-                String msg = marshallerService.marshall(response);
-                MessageCreator messageCreator = messageCreatorFactory.create(response);
-                jmsTemplate.send(CALL_RESPONSE_QUEUE, messageCreator);
-            }
-        };
-    }
 
     /**
      * {@inheritDoc}
@@ -65,6 +51,16 @@ public class ConsumerService implements IConsumerService {
     public void onMessage(Message message) {
         BasicConfigurator.configure();
         IRequest request = messageCreatorFactory.getRequest(message);
-        requestCallback.request(request, responseCallback);
+        mediator.callRequest(request);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void sendResponse(IResponse response) {
+        String msg = marshallerService.marshall(response);
+        MessageCreator messageCreator = messageCreatorFactory.create(response);
+        jmsTemplate.send(CALL_RESPONSE_QUEUE, messageCreator);
     }
 }

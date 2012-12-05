@@ -15,4 +15,5 @@ public interface IResponseCallback {
      * @param response {@link IResponse}
      */
     void response(IResponse response);
+
 }

@@ -25,6 +25,21 @@ public class Constants {
     public static final String CONTACT_ID_PROPERTY = "contactId";
 
     /**
+     * IP_ADDRESS.
+     */
+    public static final String IP_ADDRESS = "ipAddress";
+
+    /**
+     * AUDIO_PORT.
+     */
+    public static final String AUDIO_PORT = "audioPort";
+
+    /**
+     * VIDEO_PORT.
+     */
+    public static final String VIDEO_PORT = "videoPort";
+
+    /**
      * CALL_REQUEST_QUEUE.
      */
     public static final String CALL_REQUEST_QUEUE = "call.request.queue";

@@ -1,5 +1,6 @@
 package com.git.broker.client;
 
+import com.git.broker.api.domain.IMediator;
 import com.git.broker.api.domain.IRequest;
 import com.git.broker.api.domain.IRequestCallback;
 import com.git.broker.api.domain.IResponse;
@@ -34,6 +35,17 @@ public class RequestCallback implements IRequestCallback {
             response = createResponse(request.getCorrelationId(), ResponseType.CANCEL);
         }
         responseCallback.response(response);
+    }
+
+    /**
+     * Process request.
+     *
+     * @param request  {@link IRequest}
+     * @param mediator {@link IMediator}
+     */
+    @Override
+    public void request(IRequest request, IMediator mediator) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     private IResponse createResponse(String correlationId, ResponseType type) {
