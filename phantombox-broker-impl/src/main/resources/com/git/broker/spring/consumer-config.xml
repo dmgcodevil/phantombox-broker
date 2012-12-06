@@ -12,9 +12,15 @@
           class="com.git.broker.impl.service.consumer.ConsumerService"/>
 
 
-    <jms:listener-container connection-factory="connectionFactory" acknowledge="auto">
+<!--   <jms:listener-container connection-factory="connectionFactory" acknowledge="auto">
         <jms:listener destination="call.request.queue" ref="consumerService"
                       selector="contactId=${contact.contactId}"/>
-    </jms:listener-container>
+    </jms:listener-container>-->
+
+    <bean id="customMessageListenerContainer" class="com.git.broker.impl.util.jms.CustomMessageListenerContainer">
+        <property name="destinationName" value="call.request.queue"/>
+        <property name="messageListener" ref="consumerService"/>
+        <property name="connectionFactory" ref="connectionFactory"/>
+    </bean>
 
 </beans>

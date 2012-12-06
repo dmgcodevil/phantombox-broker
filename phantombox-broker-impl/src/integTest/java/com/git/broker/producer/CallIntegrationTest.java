@@ -31,9 +31,7 @@ import java.util.UUID;
 })
 public class CallIntegrationTest {
 
-    private static final String CONTACT_ID = "1235050793";
-
-    private IRequest request;
+    //private static final String CONTACT_ID = "1235050793";
 
     @Autowired
     private IProducerService producerService;
@@ -53,7 +51,7 @@ public class CallIntegrationTest {
     @Before
     public void setUp() {
         contact = UserDomainBuilder.buildOwnContact();
-        contact.setId(CONTACT_ID);
+        contact.setId(UUID.randomUUID().toString());
         mediator.setContact(contact);
 
     }

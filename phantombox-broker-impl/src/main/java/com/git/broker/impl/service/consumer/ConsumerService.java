@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
+import java.text.MessageFormat;
 import javax.jms.Message;
 
 /**
@@ -60,5 +61,10 @@ public class ConsumerService implements IConsumerService {
         String msg = marshallerService.marshall(response);
         MessageCreator messageCreator = messageCreatorFactory.create(response);
         jmsTemplate.send(CALL_RESPONSE_QUEUE, messageCreator);
+    }
+
+    @Override
+    public String getMessageSelector() {
+        return MessageFormat.format("contactId=''{0}''", mediator.getContact().getId());
     }
 }

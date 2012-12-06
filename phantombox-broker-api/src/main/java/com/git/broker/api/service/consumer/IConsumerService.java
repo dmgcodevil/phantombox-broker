@@ -20,4 +20,6 @@ public interface IConsumerService extends MessageListener {
      * @param response {@link IResponse}
      */
     void sendResponse(IResponse response);
+
+    String getMessageSelector();
 }

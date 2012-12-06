@@ -48,4 +48,5 @@ dependencies {
 
     /* ---------------- test dependencies ---------------- */
     compile('junit:junit:4.8.2')
+    compile('com.jgoodies:forms:1.2.1')
 }
