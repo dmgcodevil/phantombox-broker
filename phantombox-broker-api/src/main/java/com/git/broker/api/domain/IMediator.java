@@ -1,5 +1,9 @@
 package com.git.broker.api.domain;
 
+import com.git.domain.api.IConnection;
+
+import javax.swing.*;
+
 /**
  * Mediator interface.
  * <p/>
@@ -13,9 +17,11 @@ public interface IMediator {
     /**
      * Call request.
      *
-     * @param request {@link IRequest}
+     * @param subscriberName subscriber name
+     * @param connection     connection
+     * @param contactId      contact id
      */
-    void callRequest(IRequest request);
+    void callRequest(String subscriberName, String contactId, IConnection connection);
 
     /**
      * Incoming call.
@@ -32,9 +38,26 @@ public interface IMediator {
     void reply(IResponse response);
 
     /**
-     * Answer.
+     * Show incoming call window.
      */
-    void answer();
+    JFrame createIncomingCallFrame(String subscriberName, IMediator mediator);
+
+    /**
+     * Answer.
+     *
+     * @param responseType {@link ResponseType}
+     */
+    void answer(ResponseType responseType, String correlationId, IConnection connection);
+
+    /**
+     * Accept on broadcast.
+     */
+    void acceptOnBroadcast(String ipAddress, int audioPort, int videoPort);
+
+    /**
+     * Accept on listen.
+     */
+    void acceptOnListen(String ipAddress, int audioPort, int videoPort);
 
     /**
      * Cancel.

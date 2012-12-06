@@ -1,9 +1,9 @@
 package com.git.broker.api.domain;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 /**
- * Enter class description.
+ * ISwingMediator interface.
  * <p/>
  * Date: 05.12.12
  * Time: 20:26
@@ -12,11 +12,32 @@ import javax.swing.*;
  */
 public interface ISwingMediator extends IMediator {
 
-    void setIncomingFrame(JFrame IncomingFrame);
+    /**
+     * Sets incoming frame.
+     *
+     * @param incomingFrame incoming frame
+     */
+    void setIncomingFrame(JFrame incomingFrame);
 
+    /**
+     * Gets incoming frame.
+     *
+     * @return incoming frame
+     */
     JFrame getIncomingFrame();
 
-    void setAnswerFrame(JFrame answerFrameFrame);
+    /**
+     * Sets  answer frame.
+     *
+     * @param answerFrame answer frame
+     */
+    void setAnswerFrame(JFrame answerFrame);
 
+
+    /**
+     * Gets  answer frame.
+     *
+     * @return answer frame
+     */
     JFrame getAnswerFrame();
 }

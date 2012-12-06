@@ -5,7 +5,6 @@ import static com.git.broker.api.domain.Constants.CALL_RESPONSE_QUEUE;
 import com.git.broker.api.domain.IMediator;
 import com.git.broker.api.domain.IRequest;
 import com.git.broker.api.domain.IResponse;
-import com.git.broker.api.domain.IResponseCallback;
 import com.git.broker.api.service.factory.IMessageCreatorFactory;
 import com.git.broker.api.service.marshaller.IMarshallerService;
 import com.git.broker.api.service.producer.IProducerService;
@@ -41,10 +40,8 @@ public class ProducerService implements IProducerService {
     @Autowired
     private JmsTemplate jmsTemplate;
 
+    @Autowired
     private IMediator mediator;
-
-    //@Autowired
-    //private IResponseCallback responseCallback;
 
     private static final Logger LOGGER = Logger.getLogger(ProducerService.class);
 

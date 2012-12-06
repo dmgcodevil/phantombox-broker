@@ -3,9 +3,7 @@ package com.git.broker.impl.service.consumer;
 import static com.git.broker.api.domain.Constants.CALL_RESPONSE_QUEUE;
 import com.git.broker.api.domain.IMediator;
 import com.git.broker.api.domain.IRequest;
-import com.git.broker.api.domain.IRequestCallback;
 import com.git.broker.api.domain.IResponse;
-import com.git.broker.api.domain.IResponseCallback;
 import com.git.broker.api.service.consumer.IConsumerService;
 import com.git.broker.api.service.factory.IMessageCreatorFactory;
 import com.git.broker.api.service.marshaller.IMarshallerService;
@@ -16,7 +14,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
-import javax.annotation.PostConstruct;
 import javax.jms.Message;
 
 /**
@@ -51,7 +48,7 @@ public class ConsumerService implements IConsumerService {
     public void onMessage(Message message) {
         BasicConfigurator.configure();
         IRequest request = messageCreatorFactory.getRequest(message);
-        mediator.callRequest(request);
+        mediator.incomingCall(request);
     }
 
     /**
