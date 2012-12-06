@@ -1,4 +1,4 @@
-package com.git.broker.impl.ui.call;
+package com.git.broker.client.ui;
 
 import com.git.broker.api.domain.IMediator;
 import com.git.broker.api.domain.ResponseType;
@@ -8,11 +8,14 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 public class CallFrame extends JFrame {
 

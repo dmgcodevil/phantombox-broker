@@ -8,6 +8,8 @@ import com.git.broker.api.domain.ResponseType;
 import com.git.broker.api.service.consumer.IConsumerService;
 import com.git.broker.api.service.producer.IProducerService;
 import com.git.domain.api.IConnection;
+import com.git.domain.api.IContact;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
@@ -31,26 +33,28 @@ public abstract class AbstractMediator implements IMediator {
     @Autowired
     private IConsumerService consumerService;
 
-    private IConnection connection;
+    private IContact contact;
 
     private Map<String, IRequest> receivedRequests = new HashMap<>();
 
     private Map<String, IRequest> sentRequests = new HashMap<>();
 
+    private static final Logger LOGGER = Logger.getLogger(AbstractMediator.class);
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public IConnection getConnection() {
-        return connection;
+    public IContact getContact() {
+        return contact;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(IConnection connection) {
-        this.connection = connection;
+    public void setContact(IContact contact) {
+        this.contact = contact;
     }
 
     /**
@@ -58,7 +62,7 @@ public abstract class AbstractMediator implements IMediator {
      */
     @Override
     public void call(String subscriberName, String contactId) {
-        IRequest request = createRequest(subscriberName, contactId, connection);
+        IRequest request = createRequest(subscriberName, contactId, contact.getConnection());
         sentRequests.put(request.getCorrelationId(), request);
         producerService.sendRequest(request);
 
@@ -94,13 +98,13 @@ public abstract class AbstractMediator implements IMediator {
     @Override
     public void answer(ResponseType responseType, String correlationId) {
         IRequest request = receivedRequests.remove(correlationId);
-        IResponse response = createResponse(correlationId, responseType, connection);
+        IResponse response = createResponse(correlationId, responseType, contact.getConnection());
         consumerService.sendResponse(response);
         if (ResponseType.ACCEPT.equals(responseType)) {
             listen(request.getConnection());
-            broadcast(connection);
+            broadcast(contact.getConnection());
         } else if (ResponseType.CANCEL.equals(responseType)) {
-            //TODO implement
+            cancel();
         }
     }
 
@@ -122,4 +126,5 @@ public abstract class AbstractMediator implements IMediator {
         response.setConnection(connection);
         return response;
     }
+
 }

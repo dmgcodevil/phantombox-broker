@@ -1,5 +1,3 @@
-apply plugin: 'eclipse'
-
 task loadProperties << {
     def userProps = new Properties()
     userProps.load(new FileInputStream("$rootProject.projectDir/gradle.properties"))
@@ -11,6 +9,10 @@ task printProperties(dependsOn: 'loadProperties') << {
 }
 
 compileJava.dependsOn('loadProperties')
+
+checkstyleIntegTest {
+    exclude(['**/com/git/broker/**'])
+}
 
 dependencies {
 

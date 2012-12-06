@@ -1,22 +1,20 @@
 package com.git.broker.producer;
 
-import com.git.domain.api.IConnection;
-import com.git.domain.util.helper.UserDomainBuilder;
-import static com.git.broker.api.domain.Constants.CONTACT_ID_PROPERTY;
 import com.git.broker.api.domain.IMediator;
 import com.git.broker.api.domain.IRequest;
-import com.git.broker.api.domain.IResponse;
-import com.git.broker.api.domain.ResponseType;
 import com.git.broker.api.service.consumer.IConsumerService;
 import com.git.broker.api.service.producer.IProducerService;
-import com.git.broker.impl.domain.Request;
-import junit.framework.Assert;
+import com.git.domain.api.IConnection;
+import com.git.domain.api.IContact;
+import com.git.domain.util.helper.UserDomainBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.UUID;
 
 /**
  * Producer service integration test.
@@ -46,7 +44,7 @@ public class CallIntegrationTest {
     @Autowired
     private IMediator mediator;
 
-    private IConnection connection;
+    private IContact contact;
 
 
     /**
@@ -54,8 +52,10 @@ public class CallIntegrationTest {
      */
     @Before
     public void setUp() {
-        connection = UserDomainBuilder.buildConnection("192.168.1.2");
-        mediator.setConnection(connection);
+        contact = UserDomainBuilder.buildOwnContact();
+        contact.setId(CONTACT_ID);
+        mediator.setContact(contact);
+
     }
 
     /**
@@ -63,8 +63,7 @@ public class CallIntegrationTest {
      */
     @Test
     public void testCall() {
-        mediator.call("Alex", CONTACT_ID);
+        mediator.call("Alex", contact.getId());
     }
-
 
 }

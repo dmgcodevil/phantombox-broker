@@ -1,6 +1,7 @@
 package com.git.broker.api.domain;
 
 import com.git.domain.api.IConnection;
+import com.git.domain.api.IContact;
 
 import javax.swing.JFrame;
 
@@ -15,18 +16,18 @@ import javax.swing.JFrame;
 public interface IMediator {
 
     /**
-     * Get connection.
+     * Gets contacts.
      *
-     * @return {@link IConnection}
+     * @return {@link com.git.domain.api.IContact}
      */
-    IConnection getConnection();
+    public IContact getContact();
 
     /**
-     * Set connection.
+     * Sets contacts.
      *
-     * @param connection {@link IConnection}
+     * @param contact {@link IContact}
      */
-    void setConnection(IConnection connection);
+    public void setContact(IContact contact);
 
     /**
      * Call.
@@ -56,6 +57,7 @@ public interface IMediator {
      * @param subscriberName subscriber name
      * @param correlationId  correlation id
      * @param mediator       mediator
+     * @return frame
      */
     JFrame createIncomingCallFrame(String subscriberName, String correlationId, IMediator mediator);
 
@@ -80,5 +82,10 @@ public interface IMediator {
      * @param connection {@link IConnection}
      */
     void listen(IConnection connection);
+
+    /**
+     * Cancel.
+     */
+    void cancel();
 
 }
