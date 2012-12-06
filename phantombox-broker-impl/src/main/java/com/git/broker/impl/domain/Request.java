@@ -1,6 +1,7 @@
 package com.git.broker.impl.domain;
 
 import com.git.broker.api.domain.IRequest;
+import com.git.domain.api.IConnection;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -22,6 +23,8 @@ public class Request implements IRequest {
     private String subscriberName;
 
     private Map<String, String> properties = new HashMap();
+
+    private IConnection connection;
 
     /**
      * {@inheritDoc}
@@ -56,6 +59,23 @@ public class Request implements IRequest {
     public void setSubscriberName(String subscriberName) {
         this.subscriberName = subscriberName;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IConnection getConnection() {
+        return connection;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setConnection(IConnection connection) {
+        this.connection = connection;
+    }
+
 
     /**
      * {@inheritDoc}

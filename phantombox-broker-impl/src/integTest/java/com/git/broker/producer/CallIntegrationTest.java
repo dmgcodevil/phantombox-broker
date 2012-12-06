@@ -1,9 +1,13 @@
 package com.git.broker.producer;
 
+import com.git.domain.api.IConnection;
+import com.git.domain.util.helper.UserDomainBuilder;
 import static com.git.broker.api.domain.Constants.CONTACT_ID_PROPERTY;
+import com.git.broker.api.domain.IMediator;
 import com.git.broker.api.domain.IRequest;
 import com.git.broker.api.domain.IResponse;
 import com.git.broker.api.domain.ResponseType;
+import com.git.broker.api.service.consumer.IConsumerService;
 import com.git.broker.api.service.producer.IProducerService;
 import com.git.broker.impl.domain.Request;
 import junit.framework.Assert;
@@ -27,7 +31,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
     "classpath:com/git/broker/phantombox-broker-test-context.xml",
     "classpath:com/git/broker/spring/phantombox-broker-context.xml"
 })
-public class ProducerServiceIntegrationTest {
+public class CallIntegrationTest {
 
     private static final String CONTACT_ID = "1235050793";
 
@@ -36,42 +40,31 @@ public class ProducerServiceIntegrationTest {
     @Autowired
     private IProducerService producerService;
 
+    @Autowired
+    private IConsumerService consumerService;
+
+    @Autowired
+    private IMediator mediator;
+
+    private IConnection connection;
+
 
     /**
      * Set up.
      */
     @Before
     public void setUp() {
-        request = buildRequest();
+        connection = UserDomainBuilder.buildConnection("192.168.1.2");
+        mediator.setConnection(connection);
     }
 
     /**
      * Test SendRequest.
      */
     @Test
-    public void testSendRequestWithAccept() {
-        IResponse response = producerService.sendRequest(request);
-        Assert.assertNotNull(response);
-        Assert.assertEquals(response.getType(), ResponseType.ACCEPT);
+    public void testCall() {
+        mediator.call("Alex", CONTACT_ID);
     }
 
-    /**
-     * Test SendRequest.
-     */
-    @Test
-    public void testSendRequestWithCancel() {
-        request.setSubscriberName("Marcus");
-        IResponse response = producerService.sendRequest(request);
-        Assert.assertNotNull(response);
-        Assert.assertEquals(response.getType(), ResponseType.CANCEL);
-    }
-
-
-    private IRequest buildRequest() {
-        IRequest newRequest = new Request();
-        newRequest.getProperties().put(CONTACT_ID_PROPERTY, CONTACT_ID);
-        newRequest.setSubscriberName("Alex");
-        return newRequest;
-    }
 
 }

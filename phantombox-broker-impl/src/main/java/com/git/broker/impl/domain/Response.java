@@ -2,6 +2,7 @@ package com.git.broker.impl.domain;
 
 import com.git.broker.api.domain.IResponse;
 import com.git.broker.api.domain.ResponseType;
+import com.git.domain.api.IConnection;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -22,6 +23,8 @@ public class Response implements IResponse {
     private ResponseType type;
 
     private String message;
+
+    private IConnection connection;
 
     private Map<String, String> properties = new HashMap();
 
@@ -71,6 +74,22 @@ public class Response implements IResponse {
     @Override
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IConnection getConnection() {
+        return connection;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setConnection(IConnection connection) {
+        this.connection = connection;
     }
 
     /**

@@ -46,10 +46,10 @@ public class MessageCreatorFactory implements IMessageCreatorFactory {
     public MessageCreator create(IRequest request) {
         MessageCreator messageCreator = null;
         if (request != null) {
-            String correlationId = UUID.randomUUID().toString();
-            request.setCorrelationId(correlationId);
+            //String correlationId = UUID.randomUUID().toString();
+            //request.setCorrelationId(correlationId);
             String message = marshallerService.marshall(request);
-            messageCreator = create(message, correlationId, request.getProperties());
+            messageCreator = create(message, request.getCorrelationId(), request.getProperties());
         } else {
             throw new IllegalArgumentException("request can't be a null.");
         }

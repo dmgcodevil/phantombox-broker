@@ -45,7 +45,7 @@ public class ProducerService implements IProducerService {
 
     private static final Logger LOGGER = Logger.getLogger(ProducerService.class);
 
-    private static final int RECEIVE_TIMEOUT = 10000;
+    private static final int RECEIVE_TIMEOUT = 100000;
 
     /**
      * {@inheritDoc}

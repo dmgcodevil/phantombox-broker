@@ -1,5 +1,7 @@
 package com.git.broker.api.domain;
 
+import com.git.domain.api.IConnection;
+
 import java.util.Map;
 
 /**
@@ -41,6 +43,21 @@ public interface IRequest {
     void setSubscriberName(String subscriberName);
 
     /**
+     * Get connection.
+     *
+     * @return {@link IConnection}
+     */
+    IConnection getConnection();
+
+    /**
+     * Set connection.
+     *
+     * @param connection {@link IConnection}
+     */
+    void setConnection(IConnection connection);
+
+
+    /**
      * Gets properties.
      *
      * @return properties
@@ -53,4 +70,5 @@ public interface IRequest {
      * @param properties properties.
      */
     void setProperties(Map<String, String> properties);
+
 }

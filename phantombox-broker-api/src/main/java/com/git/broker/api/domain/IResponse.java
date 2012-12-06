@@ -1,5 +1,7 @@
 package com.git.broker.api.domain;
 
+import com.git.domain.api.IConnection;
+
 import java.util.Map;
 
 /**
@@ -54,6 +56,21 @@ public interface IResponse {
      * @param message message
      */
     void setMessage(String message);
+
+
+    /**
+     * Get connection.
+     *
+     * @return {@link com.git.domain.api.IConnection}
+     */
+    IConnection getConnection();
+
+    /**
+     * Set connection.
+     *
+     * @param connection {@link IConnection}
+     */
+    void setConnection(IConnection connection);
 
     /**
      * Gets properties.

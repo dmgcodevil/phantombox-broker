@@ -7,10 +7,6 @@
 
     <import resource="broker-test-config.xml"/>
 
-    <bean id="requestCallback"
-          class="com.git.broker.client.RequestCallback"/>
-
-    <bean id="responseCallback"
-          class="com.git.broker.client.ResponseCallback"/>
+    <bean id="swingMediator" class="com.git.broker.client.SwingAbstractMediator" parent="abstractMediator"/>
 
 </beans>

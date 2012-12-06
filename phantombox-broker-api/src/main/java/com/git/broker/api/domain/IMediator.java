@@ -2,7 +2,7 @@ package com.git.broker.api.domain;
 
 import com.git.domain.api.IConnection;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 /**
  * Mediator interface.
@@ -15,13 +15,26 @@ import javax.swing.*;
 public interface IMediator {
 
     /**
-     * Call request.
+     * Get connection.
+     *
+     * @return {@link IConnection}
+     */
+    IConnection getConnection();
+
+    /**
+     * Set connection.
+     *
+     * @param connection {@link IConnection}
+     */
+    void setConnection(IConnection connection);
+
+    /**
+     * Call.
      *
      * @param subscriberName subscriber name
-     * @param connection     connection
      * @param contactId      contact id
      */
-    void callRequest(String subscriberName, String contactId, IConnection connection);
+    void call(String subscriberName, String contactId);
 
     /**
      * Incoming call.
@@ -38,29 +51,34 @@ public interface IMediator {
     void reply(IResponse response);
 
     /**
-     * Show incoming call window.
+     * Create incoming call window.
+     *
+     * @param subscriberName subscriber name
+     * @param correlationId  correlation id
+     * @param mediator       mediator
      */
-    JFrame createIncomingCallFrame(String subscriberName, IMediator mediator);
+    JFrame createIncomingCallFrame(String subscriberName, String correlationId, IMediator mediator);
 
     /**
      * Answer.
      *
-     * @param responseType {@link ResponseType}
+     * @param responseType  {@link ResponseType}
+     * @param correlationId correlation id
      */
-    void answer(ResponseType responseType, String correlationId, IConnection connection);
+    void answer(ResponseType responseType, String correlationId);
 
     /**
-     * Accept on broadcast.
+     * Broadcast.
+     *
+     * @param connection {@link IConnection}
      */
-    void acceptOnBroadcast(String ipAddress, int audioPort, int videoPort);
+    void broadcast(IConnection connection);
 
     /**
-     * Accept on listen.
+     * Listen.
+     *
+     * @param connection {@link IConnection}
      */
-    void acceptOnListen(String ipAddress, int audioPort, int videoPort);
+    void listen(IConnection connection);
 
-    /**
-     * Cancel.
-     */
-    void cancel();
 }

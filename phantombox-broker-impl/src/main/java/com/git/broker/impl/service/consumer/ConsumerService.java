@@ -38,6 +38,7 @@ public class ConsumerService implements IConsumerService {
     @Autowired
     private IMessageCreatorFactory messageCreatorFactory;
 
+    @Autowired
     private IMediator mediator;
 
 
