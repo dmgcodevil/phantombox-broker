@@ -5,11 +5,11 @@
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-    <bean id="propertyConfigurer"
+    <bean id="brokerPropertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:/config/contact.properties</value>
+              <!--  <value>classpath:/config/contact.properties</value>-->
                 <value>classpath:/config/broker.properties</value>
             </list>
         </property>

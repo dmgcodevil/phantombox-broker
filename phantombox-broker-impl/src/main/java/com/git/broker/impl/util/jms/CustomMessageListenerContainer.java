@@ -4,7 +4,7 @@ import com.git.broker.api.service.consumer.IConsumerService;
 import org.springframework.jms.listener.DefaultMessageListenerContainer;
 
 /**
- * Class description.
+ * CustomMessageListenerContainer.
  * <p/>
  * User: dmgcodevil
  * Date: 12/6/12
@@ -12,6 +12,9 @@ import org.springframework.jms.listener.DefaultMessageListenerContainer;
  */
 public class CustomMessageListenerContainer extends DefaultMessageListenerContainer {
 
+    /**
+     * {@inheritDoc}
+     */
     public String getMessageSelector() {
         IConsumerService consumerService = (IConsumerService) getMessageListener();
         return consumerService.getMessageSelector();
