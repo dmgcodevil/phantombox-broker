@@ -1,7 +1,7 @@
 package com.git.broker.impl.domain;
 
 import static com.git.broker.api.domain.Constants.CONTACT_ID_PROPERTY;
-import com.git.broker.api.domain.IMediator;
+import com.git.broker.api.domain.IJmsExchanger;
 import com.git.broker.api.domain.IRequest;
 import com.git.broker.api.domain.IResponse;
 import com.git.broker.api.domain.ResponseType;
@@ -18,14 +18,14 @@ import java.util.UUID;
 import javax.swing.JFrame;
 
 /**
- * AbstractMediator.
+ * {@link IJmsExchanger} interface implementation.
  * <p/>
  * Date: 05.12.12
  * Time: 18:55
  *
  * @author rpleshkov
  */
-public abstract class AbstractMediator implements IMediator {
+public abstract class AbstractJmsExchanger implements IJmsExchanger {
 
     @Autowired
     private IProducerService producerService;
@@ -39,7 +39,7 @@ public abstract class AbstractMediator implements IMediator {
 
     private Map<String, IRequest> sentRequests = new HashMap<>();
 
-    private static final Logger LOGGER = Logger.getLogger(AbstractMediator.class);
+    private static final Logger LOGGER = Logger.getLogger(AbstractJmsExchanger.class);
 
     /**
      * {@inheritDoc}

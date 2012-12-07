@@ -1,10 +1,8 @@
 package com.git.broker.producer;
 
-import com.git.broker.api.domain.IMediator;
-import com.git.broker.api.domain.IRequest;
+import com.git.broker.api.domain.IJmsExchanger;
 import com.git.broker.api.service.consumer.IConsumerService;
 import com.git.broker.api.service.producer.IProducerService;
-import com.git.domain.api.IConnection;
 import com.git.domain.api.IContact;
 import com.git.domain.util.helper.UserDomainBuilder;
 import org.junit.Before;
@@ -31,8 +29,6 @@ import java.util.UUID;
 })
 public class CallIntegrationTest {
 
-    //private static final String CONTACT_ID = "1235050793";
-
     @Autowired
     private IProducerService producerService;
 
@@ -40,7 +36,7 @@ public class CallIntegrationTest {
     private IConsumerService consumerService;
 
     @Autowired
-    private IMediator mediator;
+    private IJmsExchanger jmsExchanger;
 
     private IContact contact;
 
@@ -52,7 +48,7 @@ public class CallIntegrationTest {
     public void setUp() {
         contact = UserDomainBuilder.buildOwnContact();
         contact.setId(UUID.randomUUID().toString());
-        mediator.setContact(contact);
+        jmsExchanger.setContact(contact);
 
     }
 
@@ -61,7 +57,7 @@ public class CallIntegrationTest {
      */
     @Test
     public void testCall() {
-        mediator.call("Alex", contact.getId());
+        jmsExchanger.call("Alex", contact.getId());
     }
 
 }

@@ -1,6 +1,6 @@
 package com.git.broker.client.ui;
 
-import com.git.broker.api.domain.IMediator;
+import com.git.broker.api.domain.IJmsExchanger;
 import com.git.broker.api.domain.ResponseType;
 import com.git.domain.api.IConnection;
 import com.jgoodies.forms.factories.FormFactory;
@@ -20,7 +20,7 @@ import javax.swing.border.EmptyBorder;
 public class CallFrame extends JFrame {
 
     private JPanel contentPane;
-    private IMediator mediator;
+    private IJmsExchanger jmsExchanger;
     private String correlationId;
     private IConnection connection;
     private String subscriberName;
@@ -30,8 +30,8 @@ public class CallFrame extends JFrame {
     /**
      * Create the frame.
      */
-    public CallFrame(String subscriberName, String correlationId, IMediator mediator) {
-        this.mediator = mediator;
+    public CallFrame(String subscriberName, String correlationId, IJmsExchanger jmsExchanger) {
+        this.jmsExchanger = jmsExchanger;
         this.correlationId = correlationId;
         this.connection = connection;
         this.subscriberName = subscriberName;
@@ -77,14 +77,14 @@ public class CallFrame extends JFrame {
         btnAnswer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediator.answer(ResponseType.ACCEPT, correlationId);
+                jmsExchanger.answer(ResponseType.ACCEPT, correlationId);
             }
         });
 
         btnCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mediator.answer(ResponseType.CANCEL, correlationId);
+                jmsExchanger.answer(ResponseType.CANCEL, correlationId);
             }
         });
     }

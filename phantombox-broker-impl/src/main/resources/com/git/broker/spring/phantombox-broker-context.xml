@@ -11,7 +11,7 @@
     <context:component-scan base-package="com.git.broker.impl.domain"/>
     <context:annotation-config/>
 
-    <bean id="abstractMediator" abstract="true" class="com.git.broker.impl.domain.AbstractMediator"/>
+    <bean id="abstractJmsExchanger" abstract="true" class="com.git.broker.impl.domain.AbstractJmsExchanger"/>
 
     <import resource="broker-config.xml"/>
     <import resource="producer-config.xml"/>

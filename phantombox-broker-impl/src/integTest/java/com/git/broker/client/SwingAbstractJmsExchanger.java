@@ -1,31 +1,31 @@
 package com.git.broker.client;
 
-import com.git.broker.api.domain.IMediator;
+import com.git.broker.api.domain.IJmsExchanger;
 import com.git.broker.client.ui.CallFrame;
-import com.git.broker.impl.domain.AbstractMediator;
+import com.git.broker.impl.domain.AbstractJmsExchanger;
 import com.git.domain.api.IConnection;
 import org.apache.log4j.Logger;
 
 import javax.swing.JFrame;
 
 /**
- * Enter class description.
+ * Swing jms exchanger.
  * <p/>
  * Date: 06.12.12
  * Time: 10:38
  *
  * @author rpleshkov
  */
-public class SwingAbstractMediator extends AbstractMediator implements IMediator {
+public class SwingAbstractJmsExchanger extends AbstractJmsExchanger implements IJmsExchanger {
 
-    private static final Logger LOGGER = Logger.getLogger(SwingAbstractMediator.class);
+    private static final Logger LOGGER = Logger.getLogger(SwingAbstractJmsExchanger.class);
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public JFrame createIncomingCallFrame(String subscriberName, String correlationId, IMediator mediator) {
-        return new CallFrame(subscriberName, correlationId, mediator);
+    public JFrame createIncomingCallFrame(String subscriberName, String correlationId, IJmsExchanger jmsExchanger) {
+        return new CallFrame(subscriberName, correlationId, jmsExchanger);
     }
 
     /**

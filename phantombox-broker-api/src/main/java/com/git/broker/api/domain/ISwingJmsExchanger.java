@@ -3,14 +3,14 @@ package com.git.broker.api.domain;
 import javax.swing.JFrame;
 
 /**
- * ISwingMediator interface.
+ * ISwingJmsExchanger interface.
  * <p/>
  * Date: 05.12.12
  * Time: 20:26
  *
  * @author rpleshkov
  */
-public interface ISwingMediator extends IMediator {
+public interface ISwingJmsExchanger extends IJmsExchanger {
 
     /**
      * Sets incoming frame.

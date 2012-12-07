@@ -21,8 +21,8 @@ public interface IRequestCallback {
      * Request.
      *
      * @param request  {@link IRequest}
-     * @param mediator {@link IMediator}
+     * @param jmsExchanger {@link IJmsExchanger}
      */
-    void request(IRequest request, IMediator mediator);
+    void request(IRequest request, IJmsExchanger jmsExchanger);
 
 }

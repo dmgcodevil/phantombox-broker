@@ -1,7 +1,7 @@
 package com.git.broker.impl.service.consumer;
 
 import static com.git.broker.api.domain.Constants.CALL_RESPONSE_QUEUE;
-import com.git.broker.api.domain.IMediator;
+import com.git.broker.api.domain.IJmsExchanger;
 import com.git.broker.api.domain.IRequest;
 import com.git.broker.api.domain.IResponse;
 import com.git.broker.api.service.consumer.IConsumerService;
@@ -40,7 +40,7 @@ public class ConsumerService implements IConsumerService {
     private IMessageCreatorFactory messageCreatorFactory;
 
     @Autowired
-    private IMediator mediator;
+    private IJmsExchanger jmsExchanger;
 
 
     /**
@@ -50,7 +50,7 @@ public class ConsumerService implements IConsumerService {
     public void onMessage(Message message) {
         BasicConfigurator.configure();
         IRequest request = messageCreatorFactory.getRequest(message);
-        mediator.incomingCall(request);
+        jmsExchanger.incomingCall(request);
     }
 
     /**
@@ -65,6 +65,6 @@ public class ConsumerService implements IConsumerService {
 
     @Override
     public String getMessageSelector() {
-        return MessageFormat.format("contactId=''{0}''", mediator.getContact().getId());
+        return MessageFormat.format("contactId=''{0}''", jmsExchanger.getContact().getId());
     }
 }

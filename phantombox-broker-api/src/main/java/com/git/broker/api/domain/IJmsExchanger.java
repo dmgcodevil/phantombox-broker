@@ -6,14 +6,14 @@ import com.git.domain.api.IContact;
 import javax.swing.JFrame;
 
 /**
- * Mediator interface.
+ * JmsExchanger interface.
  * <p/>
  * Date: 05.12.12
  * Time: 18:52
  *
  * @author rpleshkov
  */
-public interface IMediator {
+public interface IJmsExchanger {
 
     /**
      * Gets contacts.
@@ -56,10 +56,10 @@ public interface IMediator {
      *
      * @param subscriberName subscriber name
      * @param correlationId  correlation id
-     * @param mediator       mediator
+     * @param jmsExchanger   jmsExchanger
      * @return frame
      */
-    JFrame createIncomingCallFrame(String subscriberName, String correlationId, IMediator mediator);
+    JFrame createIncomingCallFrame(String subscriberName, String correlationId, IJmsExchanger jmsExchanger);
 
     /**
      * Answer.

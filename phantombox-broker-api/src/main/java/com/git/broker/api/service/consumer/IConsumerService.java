@@ -5,7 +5,7 @@ import com.git.broker.api.domain.IResponse;
 import javax.jms.MessageListener;
 
 /**
- * Consumer service.
+ * Consumer service interface.
  * <p/>
  * Date: 28.11.12
  * Time: 11:03
@@ -21,5 +21,10 @@ public interface IConsumerService extends MessageListener {
      */
     void sendResponse(IResponse response);
 
+    /**
+     * Gets message selector.
+     *
+     * @return message selector
+     */
     String getMessageSelector();
 }
