@@ -67,6 +67,10 @@ public class ProducerService implements IProducerService {
         return response;
     }
 
+    @Override
+    public void stop() {
+    }
+
     private String buildSelector(String correlationId) {
         String selector = MessageFormat.format("JMSCorrelationID=''{0}''",
             (StringUtils.isNotEmpty(correlationId) ? correlationId : StringUtils.EMPTY));

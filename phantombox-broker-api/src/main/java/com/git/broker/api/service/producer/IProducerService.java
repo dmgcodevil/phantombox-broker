@@ -20,4 +20,9 @@ public interface IProducerService {
      * @return {@link IResponse}
      */
     IResponse sendRequest(IRequest request);
+
+    /**
+     * Stop the request sending.
+     */
+    void stop();
 }

@@ -10,10 +10,10 @@
 
     <bean id="brokerPropertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-          p:location="classpath:config/broker.properties"/>
+          p:location="classpath:com/git/broker/config/broker.properties"/>
 
 
     <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-        <property name="brokerURL" value="${broker.url}"/>
+        <property name="brokerURL" value="tcp://localhost:61616"/>
     </bean>
 </beans>
