@@ -1,9 +1,6 @@
 package com.git.broker.api.domain;
 
 import com.git.domain.api.IConnection;
-import com.git.domain.api.IContact;
-
-import javax.swing.JFrame;
 
 /**
  * JmsExchanger interface.
@@ -16,26 +13,31 @@ import javax.swing.JFrame;
 public interface IJmsExchanger {
 
     /**
-     * Gets contacts.
-     *
-     * @return {@link com.git.domain.api.IContact}
-     */
-    public IContact getContact();
-
-    /**
-     * Sets contacts.
-     *
-     * @param contact {@link IContact}
-     */
-    public void setContact(IContact contact);
-
-    /**
      * Call.
      *
+     * @param request {@link IRequest}
+     */
+    void call(IRequest request);
+
+    /**
+     * Call without creating call frame.
+     *
      * @param subscriberName subscriber name
+     * @param connection     {@link IConnection}
      * @param contactId      contact id
      */
-    void call(String subscriberName, String contactId);
+    void call(String subscriberName, IConnection connection, String contactId);
+
+
+    /**
+     * Call with creating call frame.
+     *
+     * @param subscriberName subscriber name
+     * @param connection     {@link IConnection}
+     * @param contactName    contact name
+     * @param contactId      contact id
+     */
+    void call(String subscriberName, IConnection connection, String contactName, String contactId);
 
     /**
      * Incoming call.
@@ -51,23 +53,15 @@ public interface IJmsExchanger {
      */
     void reply(IResponse response);
 
-    /**
-     * Create incoming call window.
-     *
-     * @param subscriberName subscriber name
-     * @param correlationId  correlation id
-     * @param jmsExchanger   jmsExchanger
-     * @return frame
-     */
-    JFrame createIncomingCallFrame(String subscriberName, String correlationId, IJmsExchanger jmsExchanger);
 
     /**
      * Answer.
      *
      * @param responseType  {@link ResponseType}
+     * @param connection    {@link IConnection}
      * @param correlationId correlation id
      */
-    void answer(ResponseType responseType, String correlationId);
+    void answer(ResponseType responseType, IConnection connection, String correlationId);
 
     /**
      * Broadcast.
@@ -84,8 +78,10 @@ public interface IJmsExchanger {
     void listen(IConnection connection);
 
     /**
-     * Cancel.
+     * Cancel call.
+     *
+     * @param request {@link IRequest}
      */
-    void cancel();
+    void cancelCall(IRequest request);
 
 }

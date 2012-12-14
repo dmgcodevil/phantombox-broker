@@ -17,6 +17,8 @@ import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 import javax.jms.Message;
 
 /**
@@ -43,6 +45,8 @@ public class ProducerService implements IProducerService {
     @Autowired
     private IJmsExchanger jmsExchanger;
 
+    private Map<IRequest, MessageCreator> requestPool = new HashMap();
+
     private static final Logger LOGGER = Logger.getLogger(ProducerService.class);
 
     private static final int RECEIVE_TIMEOUT = 100000;
@@ -57,6 +61,7 @@ public class ProducerService implements IProducerService {
             MessageCreator messageCreator = messageCreatorFactory.create(request);
             jmsTemplate.send(CALL_REQUEST_QUEUE, messageCreator);
             jmsTemplate.setReceiveTimeout(RECEIVE_TIMEOUT);
+            requestPool.put(request, messageCreator);
             Message message = jmsTemplate.receiveSelected(CALL_RESPONSE_QUEUE,
                 buildSelector(request.getCorrelationId()));
             response = messageCreatorFactory.getResponse(message);
@@ -68,7 +73,9 @@ public class ProducerService implements IProducerService {
     }
 
     @Override
-    public void stop() {
+    public void cancelRequest(IRequest request) {
+        MessageCreator messageCreator = requestPool.remove(request);
+        // TODO implement cancel logic. use for this
     }
 
     private String buildSelector(String correlationId) {

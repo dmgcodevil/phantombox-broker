@@ -40,6 +40,8 @@ public class CallIntegrationTest {
 
     private IContact contact;
 
+    private IContact subscriber;
+
 
     /**
      * Set up.
@@ -48,7 +50,7 @@ public class CallIntegrationTest {
     public void setUp() {
         contact = UserDomainBuilder.buildOwnContact();
         contact.setId(UUID.randomUUID().toString());
-        jmsExchanger.setContact(contact);
+        //jmsExchanger.setContact(contact);
 
     }
 
@@ -57,7 +59,7 @@ public class CallIntegrationTest {
      */
     @Test
     public void testCall() {
-        jmsExchanger.call("Alex", contact.getId());
+        //jmsExchanger.call("Alex", contact.getId());
     }
 
 }

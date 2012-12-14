@@ -22,7 +22,9 @@ public interface IProducerService {
     IResponse sendRequest(IRequest request);
 
     /**
-     * Stop the request sending.
+     * Cancel the request sending.
+     *
+     * @param request {@link IRequest}
      */
-    void stop();
+    void cancelRequest(IRequest request);
 }

@@ -2,6 +2,7 @@ rootProject.name='phantombox-broker'
 
 include 'phantombox-broker-api'
 include 'phantombox-broker-impl'
+include 'phantombox-broker-ui'
 //include 'phantombox-broker-domain'
 //include 'phantombox-broker-consumer'
 //include 'phantombox-broker-producer'
