@@ -1,8 +1,12 @@
 package com.git.broker.producer;
 
 import com.git.broker.api.domain.IJmsExchanger;
+import static com.git.broker.api.domain.Constants.CONTACT_ID_PROPERTY;
+import com.git.broker.api.domain.ISelectorBuilder;
+import com.git.broker.api.domain.SelectorCondition;
 import com.git.broker.api.service.consumer.IConsumerService;
 import com.git.broker.api.service.producer.IProducerService;
+import com.git.broker.impl.domain.SelectorBuilder;
 import com.git.domain.api.IContact;
 import com.git.domain.util.helper.UserDomainBuilder;
 import org.junit.Before;
@@ -38,6 +42,8 @@ public class CallIntegrationTest {
     @Autowired
     private IJmsExchanger jmsExchanger;
 
+    private ISelectorBuilder selectorBuilder;
+
     private IContact contact;
 
     private IContact subscriber;
@@ -48,9 +54,16 @@ public class CallIntegrationTest {
      */
     @Before
     public void setUp() {
+        selectorBuilder = new SelectorBuilder();
         contact = UserDomainBuilder.buildOwnContact();
+        subscriber = UserDomainBuilder.buildOwnContact();
         contact.setId(UUID.randomUUID().toString());
-        //jmsExchanger.setContact(contact);
+        subscriber.setId(UUID.randomUUID().toString());
+        jmsExchanger.setSelector(selectorBuilder.createSelector()
+            .addProperty(CONTACT_ID_PROPERTY)
+            .addCondition(SelectorCondition.EQUALS)
+            .addPropertyValue(contact.getId())
+            .buildSelector());
 
     }
 
@@ -59,7 +72,7 @@ public class CallIntegrationTest {
      */
     @Test
     public void testCall() {
-        //jmsExchanger.call("Alex", contact.getId());
+        jmsExchanger.call(subscriber, contact);
     }
 
 }

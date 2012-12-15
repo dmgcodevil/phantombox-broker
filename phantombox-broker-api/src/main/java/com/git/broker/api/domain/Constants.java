@@ -10,6 +10,7 @@ package com.git.broker.api.domain;
  */
 public class Constants {
 
+
     private Constants() {
         throw new AssertionError();
     }
@@ -23,6 +24,11 @@ public class Constants {
      * CONTACT_ID_PROPERTY.
      */
     public static final String CONTACT_ID_PROPERTY = "contactId";
+
+    /**
+     * CONTACT_NAME.
+     */
+    public static final String CONTACT_NAME = "contactName";
 
     /**
      * IP_ADDRESS.

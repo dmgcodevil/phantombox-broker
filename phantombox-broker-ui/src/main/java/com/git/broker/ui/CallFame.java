@@ -22,7 +22,6 @@ import javax.swing.border.EmptyBorder;
 
 public class CallFame extends BaseFrame implements ICallFame {
 
-    private JPanel contentPane;
     private JButton btnCancel;
     private JLabel lblContactName;
     private IRequest request;
@@ -50,24 +49,6 @@ public class CallFame extends BaseFrame implements ICallFame {
     private static final int LEFT = 5;
     private static final int BOTTOM = 5;
     private static final int RIGHT = 5;
-
-    /**
-     * Gets content pane.
-     *
-     * @return content pane
-     */
-    public JPanel getContentPane() {
-        return contentPane;
-    }
-
-    /**
-     * Sets content pane.
-     *
-     * @param contentPane content pane
-     */
-    public void setContentPane(JPanel contentPane) {
-        this.contentPane = contentPane;
-    }
 
     /**
      * {@inheritDoc}
@@ -151,7 +132,7 @@ public class CallFame extends BaseFrame implements ICallFame {
     public CallFame() {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setBounds(X, Y, WIDTH, HEIGHT);
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(TOP, LEFT, BOTTOM, RIGHT));
         setContentPane(contentPane);
         contentPane.setLayout(new FormLayout(new ColumnSpec[]{

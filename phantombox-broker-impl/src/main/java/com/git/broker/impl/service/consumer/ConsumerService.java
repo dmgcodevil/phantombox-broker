@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
-import java.text.MessageFormat;
 import javax.jms.Message;
 
 /**
@@ -42,27 +41,6 @@ public class ConsumerService implements IConsumerService {
     @Autowired
     private IJmsExchanger jmsExchanger;
 
-    //TODO refine it.
-    private String contactId;
-
-    /**
-     * Gets contact id.
-     *
-     * @return contact id
-     */
-    public String getContactId() {
-        return contactId;
-    }
-
-    /**
-     * Set contact id.
-     *
-     * @param contactId contact id
-     */
-    public void setContactId(String contactId) {
-        this.contactId = contactId;
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -85,6 +63,6 @@ public class ConsumerService implements IConsumerService {
 
     @Override
     public String getMessageSelector() {
-        return MessageFormat.format("contactId=''{0}''", contactId);
+        return jmsExchanger.getSelector().getValue();
     }
 }

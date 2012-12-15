@@ -12,6 +12,7 @@
     <context:annotation-config/>
 
     <bean id="abstractJmsExchanger" abstract="true" class="com.git.broker.impl.domain.AbstractJmsExchanger"/>
+    <bean id="frameManager" class="com.git.broker.ui.FrameManager"/>
 
     <import resource="broker-config.xml"/>
     <import resource="producer-config.xml"/>

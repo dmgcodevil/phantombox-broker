@@ -7,6 +7,6 @@
 
     <import resource="broker-test-config.xml"/>
 
-    <bean id="swingJmsExchanger" class="com.git.broker.client.SwingAbstractJmsExchanger" parent="abstractJmsExchanger"/>
+    <bean id="swingJmsExchanger" class="com.git.broker.producer.SwingJmsExchanger" parent="abstractJmsExchanger"/>
 
 </beans>

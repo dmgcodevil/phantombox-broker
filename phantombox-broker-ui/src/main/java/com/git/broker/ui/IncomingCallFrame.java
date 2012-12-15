@@ -187,8 +187,7 @@ public class IncomingCallFrame extends BaseFrame implements IIncomingCallFrame {
     }
 
     private void answer(ResponseType type) {
-        jmsExchanger.answer(type, request.getConnection(),
-            request.getCorrelationId());
+        jmsExchanger.answer(type, request.getCorrelationId());
     }
 
 }

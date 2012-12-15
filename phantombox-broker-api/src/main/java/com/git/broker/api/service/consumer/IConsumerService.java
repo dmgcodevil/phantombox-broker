@@ -27,4 +27,5 @@ public interface IConsumerService extends MessageListener {
      * @return message selector
      */
     String getMessageSelector();
+
 }

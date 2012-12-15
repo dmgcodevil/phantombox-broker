@@ -1,14 +1,17 @@
 package com.git.broker.impl.domain;
 
 import static com.git.broker.api.domain.Constants.CONTACT_ID_PROPERTY;
+import static com.git.broker.api.domain.Constants.CONTACT_NAME;
 import com.git.broker.api.domain.IJmsExchanger;
 import com.git.broker.api.domain.IRequest;
 import com.git.broker.api.domain.IResponse;
+import com.git.broker.api.domain.ISelector;
 import com.git.broker.api.domain.ResponseType;
 import com.git.broker.api.service.consumer.IConsumerService;
 import com.git.broker.api.service.producer.IProducerService;
 import com.git.broker.api.ui.IFrameManager;
 import com.git.domain.api.IConnection;
+import com.git.domain.api.IContact;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -35,6 +38,10 @@ public abstract class AbstractJmsExchanger implements IJmsExchanger {
     @Autowired
     private IFrameManager frameManager;
 
+    private IContact contact;
+
+    private ISelector selector;
+
     private Map<String, IRequest> receivedRequests = new HashMap<>();
 
     private Map<String, IRequest> sentRequests = new HashMap<>();
@@ -46,28 +53,42 @@ public abstract class AbstractJmsExchanger implements IJmsExchanger {
      * {@inheritDoc}
      */
     @Override
-    public void call(IRequest request) {
-        sentRequests.put(request.getCorrelationId(), request);
-        producerService.sendRequest(request);
+    public IContact getContact() {
+        return contact;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void call(String subscriberName, IConnection connection, String contactId) {
-        IRequest request = createRequest(subscriberName, contactId, connection);
-        call(request);
+    public void setContact(IContact contact) {
+        this.contact = contact;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void call(String subscriberName, IConnection connection, String contactName,
-                     String contactId) {
-        IRequest request = createRequest(subscriberName, contactId, connection);
-        frameManager.createCallFame(request, this, contactName);
+    public ISelector getSelector() {
+        return selector;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setSelector(ISelector selector) {
+        this.selector = selector;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void call(IContact subscriber, IContact receiver) {
+        IRequest request = createRequest(subscriber.getName(), receiver.getId(),
+            subscriber.getConnection());
+        frameManager.createCallFame(request, this, receiver.getName());
         call(request);
     }
 
@@ -87,12 +108,13 @@ public abstract class AbstractJmsExchanger implements IJmsExchanger {
     @Override
     public void reply(IResponse response) {
         IRequest request = sentRequests.remove(response.getCorrelationId());
+        frameManager.disposeCallFame(request);
         if (ResponseType.ACCEPT.equals(response.getType())) {
             broadcast(request.getConnection());
             listen(response.getConnection());
         } else {
             producerService.cancelRequest(request);
-            frameManager.disposeCallFame(request);
+            frameManager.showCancelCallDialog(response.getProperties().get(CONTACT_NAME));
         }
     }
 
@@ -101,16 +123,17 @@ public abstract class AbstractJmsExchanger implements IJmsExchanger {
      * {@inheritDoc}
      */
     @Override
-    public void answer(ResponseType responseType, IConnection connection, String correlationId) {
+    public void answer(ResponseType responseType, String correlationId) {
         IRequest receivedRequest = receivedRequests.remove(correlationId);
-        IResponse response = createResponse(correlationId, responseType, connection);
+        IResponse response = createResponse(correlationId, responseType, contact.getConnection());
+        response.getProperties().put(CONTACT_NAME, contact.getName());
         consumerService.sendResponse(response);
+        frameManager.disposeIncomingCallFrame(receivedRequest);
         if (ResponseType.ACCEPT.equals(responseType)) {
             listen(receivedRequest.getConnection());
-            broadcast(connection);
-        } else {
-            frameManager.disposeCallFame(receivedRequest);
+            broadcast(contact.getConnection());
         }
+
     }
 
     /**
@@ -119,6 +142,11 @@ public abstract class AbstractJmsExchanger implements IJmsExchanger {
     @Override
     public void cancelCall(IRequest request) {
         producerService.cancelRequest(request);
+    }
+
+    private void call(IRequest request) {
+        sentRequests.put(request.getCorrelationId(), request);
+        producerService.sendRequest(request);
     }
 
     private IRequest createRequest(String subscriberName, String contactId,

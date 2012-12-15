@@ -18,6 +18,7 @@ dependencies {
 
     /* ---------------- phantombox dependencies ---------------- */
     compile project(':phantombox-broker-api')
+    compile project(':phantombox-broker-ui')
 
     /* ---------------- spring dependencies ---------------- */
     compile("org.springframework:spring-aop:${springVersion}")
@@ -33,7 +34,6 @@ dependencies {
 
     compile('org.aspectj:aspectjtools:1.6.2')
     compile('org.aspectj:aspectjrt:1.6.12')
-    compile('jgoodies:forms:1.0.5')
 
     compile('org.apache.activemq:activemq-all:5.6.0')
     compile('org.apache.activemq:activemq-pool:5.6.0')
@@ -48,5 +48,5 @@ dependencies {
 
     /* ---------------- test dependencies ---------------- */
     compile('junit:junit:4.8.2')
-    compile('com.jgoodies:forms:1.2.1')
+    //compile('com.jgoodies:forms:1.2.1')
 }

@@ -6,6 +6,5 @@ dependencies {
 
     /* ---------------- phantombox dependencies ---------------- */
     compile project(':phantombox-broker-api')
-   
     compile('com.jgoodies:forms:1.2.1')
 }

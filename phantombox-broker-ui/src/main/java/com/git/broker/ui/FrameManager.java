@@ -8,6 +8,7 @@ import com.git.broker.api.ui.IFrameManager;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JOptionPane;
 
 /**
  * {@link IFrameManager} interface implementation.
@@ -51,6 +52,7 @@ public class FrameManager implements IFrameManager {
     public IIncomingCallFrame createIncomingCallFrame(IRequest request, IJmsExchanger jmsExchanger) {
         IIncomingCallFrame incomingCallFrame = new IncomingCallFrame(request, jmsExchanger);
         incomingCallFrames.put(request, incomingCallFrame);
+        incomingCallFrame.showFrame();
         return incomingCallFrame;
     }
 
@@ -63,6 +65,14 @@ public class FrameManager implements IFrameManager {
         if (incomingCallFrame != null) {
             incomingCallFrame.close();
         }
+    }
+
+    @Override
+    public void showCancelCallDialog(String contactName) {
+        JOptionPane.showMessageDialog(null,
+            contactName +  " canceled your call",
+            "Call",
+            JOptionPane.ERROR_MESSAGE);
     }
 
 

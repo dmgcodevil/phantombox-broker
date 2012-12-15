@@ -1,6 +1,7 @@
 package com.git.broker.api.domain;
 
 import com.git.domain.api.IConnection;
+import com.git.domain.api.IContact;
 
 /**
  * JmsExchanger interface.
@@ -13,31 +14,40 @@ import com.git.domain.api.IConnection;
 public interface IJmsExchanger {
 
     /**
-     * Call.
+     * Sets contact.
      *
-     * @param request {@link IRequest}
+     * @param contact contact
      */
-    void call(IRequest request);
+    public void setContact(IContact contact);
 
     /**
-     * Call without creating call frame.
+     * Gets contact.
      *
-     * @param subscriberName subscriber name
-     * @param connection     {@link IConnection}
-     * @param contactId      contact id
+     * @return contact
      */
-    void call(String subscriberName, IConnection connection, String contactId);
+    public IContact getContact();
 
+    /**
+     * Gets selector.
+     *
+     * @return ISelector
+     */
+    public ISelector getSelector();
+
+    /**
+     * Sets selector.
+     *
+     * @param selector selector
+     */
+    public void setSelector(ISelector selector);
 
     /**
      * Call with creating call frame.
      *
-     * @param subscriberName subscriber name
-     * @param connection     {@link IConnection}
-     * @param contactName    contact name
-     * @param contactId      contact id
+     * @param subscriber subscriber
+     * @param receiver   receiver
      */
-    void call(String subscriberName, IConnection connection, String contactName, String contactId);
+    void call(IContact subscriber, IContact receiver);
 
     /**
      * Incoming call.
@@ -58,10 +68,9 @@ public interface IJmsExchanger {
      * Answer.
      *
      * @param responseType  {@link ResponseType}
-     * @param connection    {@link IConnection}
      * @param correlationId correlation id
      */
-    void answer(ResponseType responseType, IConnection connection, String correlationId);
+    void answer(ResponseType responseType, String correlationId);
 
     /**
      * Broadcast.

@@ -49,4 +49,11 @@ public interface IFrameManager {
      */
     void disposeIncomingCallFrame(IRequest request);
 
+    /**
+     * Show cancel call dialog.
+     *
+     * @param contactName contact name
+     */
+    void showCancelCallDialog(String contactName);
+
 }

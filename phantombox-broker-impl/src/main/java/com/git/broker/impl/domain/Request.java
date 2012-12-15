@@ -3,6 +3,8 @@ package com.git.broker.impl.domain;
 import com.git.broker.api.domain.IRequest;
 import com.git.domain.api.IConnection;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.HashMap;
@@ -91,6 +93,39 @@ public class Request implements IRequest {
     @Override
     public void setProperties(Map<String, String> properties) {
         this.properties = properties;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Request)) {
+            return false;
+        }
+
+        Request that = (Request) o;
+        return new EqualsBuilder()
+            .append(subscriberName, that.subscriberName)
+            .append(correlationId, that.correlationId)
+            .append(connection, that.connection)
+            .isEquals();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+            .append(subscriberName)
+            .append(correlationId)
+            .append(connection)
+            .toHashCode();
     }
 
     /**
