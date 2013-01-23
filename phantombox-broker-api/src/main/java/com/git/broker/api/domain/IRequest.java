@@ -56,6 +56,19 @@ public interface IRequest {
      */
     void setConnection(IConnection connection);
 
+    /**
+     * Gets request type.
+     *
+     * @return RequestType
+     */
+    RequestType getRequestType();
+
+    /**
+     * Set request type.
+     *
+     * @param requestType {@link RequestType}
+     */
+    void setRequestType(RequestType requestType);
 
     /**
      * Gets properties.

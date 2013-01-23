@@ -4,6 +4,7 @@ import static com.git.broker.api.domain.Constants.CALL_RESPONSE_QUEUE;
 import com.git.broker.api.domain.IJmsExchanger;
 import com.git.broker.api.domain.IRequest;
 import com.git.broker.api.domain.IResponse;
+import com.git.broker.api.domain.RequestType;
 import com.git.broker.api.service.consumer.IConsumerService;
 import com.git.broker.api.service.factory.IMessageCreatorFactory;
 import com.git.broker.api.service.marshaller.IMarshallerService;
@@ -48,7 +49,11 @@ public class ConsumerService implements IConsumerService {
     public void onMessage(Message message) {
         BasicConfigurator.configure();
         IRequest request = messageCreatorFactory.getRequest(message);
-        jmsExchanger.incomingCall(request);
+        if (RequestType.STOP_CALL.equals(request.getRequestType())) {
+            jmsExchanger.onCallReject(request.getConnection());
+        } else {
+            jmsExchanger.incomingCall(request);
+        }
     }
 
     /**

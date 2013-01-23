@@ -93,4 +93,19 @@ public interface IJmsExchanger {
      */
     void cancelCall(IRequest request);
 
+    /**
+     * Stop call.
+     *
+     * @param connection {@link IConnection}
+     * @param receiver   {@link IContact}
+     */
+    void stopCall(IConnection connection, IContact receiver);
+
+    /**
+     * Will invoke then subscriber stop the call.
+     *
+     * @param connection {@link IConnection}
+     */
+    void onCallReject(IConnection connection);
+
 }

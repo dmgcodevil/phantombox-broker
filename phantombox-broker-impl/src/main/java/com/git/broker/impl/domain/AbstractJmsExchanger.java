@@ -6,6 +6,7 @@ import com.git.broker.api.domain.IJmsExchanger;
 import com.git.broker.api.domain.IRequest;
 import com.git.broker.api.domain.IResponse;
 import com.git.broker.api.domain.ISelector;
+import com.git.broker.api.domain.RequestType;
 import com.git.broker.api.domain.ResponseType;
 import com.git.broker.api.service.consumer.IConsumerService;
 import com.git.broker.api.service.producer.IProducerService;
@@ -88,6 +89,7 @@ public abstract class AbstractJmsExchanger implements IJmsExchanger {
     public void call(IContact subscriber, IContact receiver) {
         IRequest request = createRequest(subscriber.getName(), receiver.getId(),
             subscriber.getConnection());
+        request.setRequestType(RequestType.START_CALL);
         frameManager.createCallFame(request, this, receiver.getName());
         call(request);
     }
@@ -142,6 +144,22 @@ public abstract class AbstractJmsExchanger implements IJmsExchanger {
     @Override
     public void cancelCall(IRequest request) {
         producerService.cancelRequest(request);
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void stopCall(IConnection connection, IContact receiver) {
+        IRequest request = new Request();
+        String correlationId = UUID.randomUUID().toString();
+        request.setCorrelationId(correlationId);
+        request.setConnection(connection);
+        request.getProperties().put(CONTACT_ID_PROPERTY, receiver.getId());
+        request.setRequestType(RequestType.STOP_CALL);
+        // sentRequests.put(request.getCorrelationId(), request);  ???
+        producerService.sendRequest(request);
     }
 
     private void call(IRequest request) {

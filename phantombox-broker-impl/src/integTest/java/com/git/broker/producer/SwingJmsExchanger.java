@@ -20,4 +20,9 @@ public class SwingJmsExchanger extends AbstractJmsExchanger {
     public void listen(IConnection connection) {
         System.out.println("listen");
     }
+
+    @Override
+    public void onCallReject(IConnection connection) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

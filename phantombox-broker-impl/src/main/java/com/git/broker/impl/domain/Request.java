@@ -1,6 +1,7 @@
 package com.git.broker.impl.domain;
 
 import com.git.broker.api.domain.IRequest;
+import com.git.broker.api.domain.RequestType;
 import com.git.domain.api.IConnection;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -27,6 +28,8 @@ public class Request implements IRequest {
     private Map<String, String> properties = new HashMap();
 
     private IConnection connection;
+
+    private RequestType requestType;
 
     /**
      * {@inheritDoc}
@@ -78,6 +81,22 @@ public class Request implements IRequest {
         this.connection = connection;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public RequestType getRequestType() {
+        return requestType;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setRequestType(RequestType requestType) {
+        this.requestType = requestType;
+    }
 
     /**
      * {@inheritDoc}
