@@ -8,5 +8,5 @@ package com.git.broker.api.domain;
  * Time: 4:54 PM
  */
 public enum ResponseType {
-    CANCEL, ACCEPT
+    CANCEL, ACCEPT, REJECT
 }

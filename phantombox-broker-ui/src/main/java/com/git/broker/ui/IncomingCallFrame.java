@@ -165,7 +165,7 @@ public class IncomingCallFrame extends BaseFrame implements IIncomingCallFrame {
         this();
         this.request = request;
         this.jmsExchanger = jmsExchanger;
-        lblSubscriber.setText(request.getSubscriberName());
+        lblSubscriber.setText(request.getContact().getName());
         addListeners();
     }
 

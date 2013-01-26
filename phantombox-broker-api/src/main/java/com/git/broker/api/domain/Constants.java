@@ -21,6 +21,11 @@ public class Constants {
     public static final String CLASS_NAME_PROPERTY = "className";
 
     /**
+     * SUBSCRIBER_ID_PROPERTY.
+     */
+    public static final String SUBSCRIBER_ID_PROPERTY = "subscriberId";
+
+    /**
      * CONTACT_ID_PROPERTY.
      */
     public static final String CONTACT_ID_PROPERTY = "contactId";

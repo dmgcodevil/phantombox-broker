@@ -1,6 +1,6 @@
 package com.git.broker.api.domain;
 
-import com.git.domain.api.IConnection;
+import com.git.domain.api.IContact;
 
 import java.util.Map;
 
@@ -29,32 +29,18 @@ public interface IRequest {
     void setCorrelationId(String correlationId);
 
     /**
-     * Gets subscriber name.
+     * Gets contact.
      *
-     * @return correlation id
+     * @return contact
      */
-    String getSubscriberName();
+    IContact getContact();
 
     /**
-     * Sets subscriber name.
+     * Sets contact.
      *
-     * @param subscriberName subscriber name
+     * @param contact contact
      */
-    void setSubscriberName(String subscriberName);
-
-    /**
-     * Get connection.
-     *
-     * @return {@link IConnection}
-     */
-    IConnection getConnection();
-
-    /**
-     * Set connection.
-     *
-     * @param connection {@link IConnection}
-     */
-    void setConnection(IConnection connection);
+    void setContact(IContact contact);
 
     /**
      * Gets request type.

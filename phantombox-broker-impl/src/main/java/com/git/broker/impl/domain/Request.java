@@ -2,8 +2,7 @@ package com.git.broker.impl.domain;
 
 import com.git.broker.api.domain.IRequest;
 import com.git.broker.api.domain.RequestType;
-import com.git.domain.api.IConnection;
-
+import com.git.domain.api.IContact;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -27,7 +26,7 @@ public class Request implements IRequest {
 
     private Map<String, String> properties = new HashMap();
 
-    private IConnection connection;
+    private IContact contact;
 
     private RequestType requestType;
 
@@ -52,33 +51,16 @@ public class Request implements IRequest {
      * {@inheritDoc}
      */
     @Override
-    public String getSubscriberName() {
-        return subscriberName;
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setSubscriberName(String subscriberName) {
-        this.subscriberName = subscriberName;
+    public IContact getContact() {
+        return contact;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public IConnection getConnection() {
-        return connection;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setConnection(IConnection connection) {
-        this.connection = connection;
+    public void setContact(IContact contact) {
+        this.contact = contact;
     }
 
 
@@ -131,7 +113,7 @@ public class Request implements IRequest {
         return new EqualsBuilder()
             .append(subscriberName, that.subscriberName)
             .append(correlationId, that.correlationId)
-            .append(connection, that.connection)
+            .append(contact, that.contact)
             .isEquals();
     }
 
@@ -143,7 +125,7 @@ public class Request implements IRequest {
         return new HashCodeBuilder()
             .append(subscriberName)
             .append(correlationId)
-            .append(connection)
+            .append(contact)
             .toHashCode();
     }
 
@@ -156,6 +138,7 @@ public class Request implements IRequest {
             .append("correlationId", correlationId)
             .append("subscriberName", subscriberName)
             .append("properties", properties)
+            .append("contact", contact)
             .toString();
     }
 }

@@ -82,9 +82,9 @@ public interface IJmsExchanger {
     /**
      * Listen.
      *
-     * @param connection {@link IConnection}
+     * @param contact contact
      */
-    void listen(IConnection connection);
+    void listen(IContact contact);
 
     /**
      * Cancel call.
@@ -96,16 +96,16 @@ public interface IJmsExchanger {
     /**
      * Stop call.
      *
-     * @param connection {@link IConnection}
+     * @param subscriber {@link IContact}
      * @param receiver   {@link IContact}
      */
-    void stopCall(IConnection connection, IContact receiver);
+    void stopCall(IContact subscriber, IContact receiver);
 
     /**
-     * Will invoke then subscriber stop the call.
+     * Invoke on stop request.
      *
-     * @param connection {@link IConnection}
+     * @param contact {@link IContact}
      */
-    void onCallReject(IConnection connection);
+    void onCallStop(IContact contact);
 
 }

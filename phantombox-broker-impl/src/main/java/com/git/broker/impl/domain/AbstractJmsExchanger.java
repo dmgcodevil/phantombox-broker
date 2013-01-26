@@ -11,7 +11,6 @@ import com.git.broker.api.domain.ResponseType;
 import com.git.broker.api.service.consumer.IConsumerService;
 import com.git.broker.api.service.producer.IProducerService;
 import com.git.broker.api.ui.IFrameManager;
-import com.git.domain.api.IConnection;
 import com.git.domain.api.IContact;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,8 +86,7 @@ public abstract class AbstractJmsExchanger implements IJmsExchanger {
      */
     @Override
     public void call(IContact subscriber, IContact receiver) {
-        IRequest request = createRequest(subscriber.getName(), receiver.getId(),
-            subscriber.getConnection());
+        IRequest request = createRequest(subscriber, receiver.getId());
         request.setRequestType(RequestType.START_CALL);
         frameManager.createCallFame(request, this, receiver.getName());
         call(request);
@@ -99,8 +97,13 @@ public abstract class AbstractJmsExchanger implements IJmsExchanger {
      */
     @Override
     public void incomingCall(IRequest request) {
-        receivedRequests.put(request.getCorrelationId(), request);
-        frameManager.createIncomingCallFrame(request, this);
+        if (RequestType.STOP_CALL.equals(request.getRequestType())) {
+            onCallReject(request);
+        } else {
+            receivedRequests.put(request.getCorrelationId(), request);
+            frameManager.createIncomingCallFrame(request, this);
+        }
+
     }
 
 
@@ -112,11 +115,13 @@ public abstract class AbstractJmsExchanger implements IJmsExchanger {
         IRequest request = sentRequests.remove(response.getCorrelationId());
         frameManager.disposeCallFame(request);
         if (ResponseType.ACCEPT.equals(response.getType())) {
-            broadcast(request.getConnection());
-            listen(response.getConnection());
-        } else {
+            broadcast(request.getContact().getConnection());
+            listen(response.getContact());
+        } else if (ResponseType.CANCEL.equals(response.getType())) {
             producerService.cancelRequest(request);
             frameManager.showCancelCallDialog(response.getProperties().get(CONTACT_NAME));
+        } else if (ResponseType.REJECT.equals(response.getType())) {
+            onCallStop(response.getContact());
         }
     }
 
@@ -126,13 +131,17 @@ public abstract class AbstractJmsExchanger implements IJmsExchanger {
      */
     @Override
     public void answer(ResponseType responseType, String correlationId) {
+        // take request from pool
         IRequest receivedRequest = receivedRequests.remove(correlationId);
-        IResponse response = createResponse(correlationId, responseType, contact.getConnection());
+        // create response
+        IResponse response = createResponse(correlationId, responseType);
         response.getProperties().put(CONTACT_NAME, contact.getName());
+        response.getProperties().put(CONTACT_ID_PROPERTY, contact.getId());
+        // send  response
         consumerService.sendResponse(response);
         frameManager.disposeIncomingCallFrame(receivedRequest);
         if (ResponseType.ACCEPT.equals(responseType)) {
-            listen(receivedRequest.getConnection());
+            listen(receivedRequest.getContact());
             broadcast(contact.getConnection());
         }
 
@@ -151,39 +160,56 @@ public abstract class AbstractJmsExchanger implements IJmsExchanger {
      * {@inheritDoc}
      */
     @Override
-    public void stopCall(IConnection connection, IContact receiver) {
+    public void stopCall(IContact subscriber, IContact receiver) {
         IRequest request = new Request();
         String correlationId = UUID.randomUUID().toString();
         request.setCorrelationId(correlationId);
-        request.setConnection(connection);
+        request.setContact(subscriber);
         request.getProperties().put(CONTACT_ID_PROPERTY, receiver.getId());
         request.setRequestType(RequestType.STOP_CALL);
-        // sentRequests.put(request.getCorrelationId(), request);  ???
+        sentRequests.put(request.getCorrelationId(), request);
         producerService.sendRequest(request);
     }
+
 
     private void call(IRequest request) {
         sentRequests.put(request.getCorrelationId(), request);
         producerService.sendRequest(request);
     }
 
-    private IRequest createRequest(String subscriberName, String contactId,
-                                   IConnection connection) {
+
+    private void onCallReject(IRequest request) {
+        // take request from pool
+        String correlationId = request.getCorrelationId();
+        IRequest receivedRequest = receivedRequests.remove(correlationId);
+        // create response
+        IResponse response = createResponse(correlationId, ResponseType.REJECT);
+        response.getProperties().put(CONTACT_NAME, contact.getName());
+        response.getProperties().put(CONTACT_ID_PROPERTY, contact.getId());
+        // send  response
+        consumerService.sendResponse(response);
+        // stop
+        onCallStop(request.getContact());
+      /*  if (ResponseType.ACCEPT.equals(responseType)) {
+            listen(receivedRequest.getContact());
+            broadcast(contact.getConnection());
+        }*/
+    }
+
+    private IRequest createRequest(IContact subscriber, String contactId) {
         IRequest request = new Request();
         String correlationId = UUID.randomUUID().toString();
         request.setCorrelationId(correlationId);
-        request.setSubscriberName(subscriberName);
-        request.setConnection(connection);
+        request.setContact(subscriber);
         request.getProperties().put(CONTACT_ID_PROPERTY, contactId);
         return request;
     }
 
-    private IResponse createResponse(String correlationId, ResponseType type,
-                                     IConnection connection) {
+    private IResponse createResponse(String correlationId, ResponseType type) {
         IResponse response = new Response();
         response.setCorrelationId(correlationId);
         response.setType(type);
-        response.setConnection(connection);
+        response.setContact(contact);
         return response;
     }
 

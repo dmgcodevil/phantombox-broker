@@ -2,8 +2,7 @@ package com.git.broker.impl.domain;
 
 import com.git.broker.api.domain.IResponse;
 import com.git.broker.api.domain.ResponseType;
-import com.git.domain.api.IConnection;
-
+import com.git.domain.api.IContact;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -26,7 +25,7 @@ public class Response implements IResponse {
 
     private String message;
 
-    private IConnection connection;
+    private IContact contact;
 
     private Map<String, String> properties = new HashMap();
 
@@ -82,17 +81,18 @@ public class Response implements IResponse {
      * {@inheritDoc}
      */
     @Override
-    public IConnection getConnection() {
-        return connection;
+    public IContact getContact() {
+        return contact;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(IConnection connection) {
-        this.connection = connection;
+    public void setContact(IContact contact) {
+        this.contact = contact;
     }
+
 
     /**
      * {@inheritDoc}
@@ -125,7 +125,7 @@ public class Response implements IResponse {
         Response that = (Response) o;
         return new EqualsBuilder()
             .append(correlationId, that.correlationId)
-            .append(connection, that.connection)
+            .append(contact, that.contact)
             .isEquals();
     }
 
@@ -136,7 +136,7 @@ public class Response implements IResponse {
     public int hashCode() {
         return new HashCodeBuilder()
             .append(correlationId)
-            .append(connection)
+            .append(contact)
             .toHashCode();
     }
 
@@ -151,6 +151,7 @@ public class Response implements IResponse {
             .append("type", type)
             .append("message", message)
             .append("properties", properties)
+            .append("contact", contact)
             .toString();
     }
 }

@@ -2,6 +2,7 @@ package com.git.broker.producer;
 
 import com.git.broker.impl.domain.AbstractJmsExchanger;
 import com.git.domain.api.IConnection;
+import com.git.domain.api.IContact;
 
 /**
  * Class description.
@@ -17,12 +18,14 @@ public class SwingJmsExchanger extends AbstractJmsExchanger {
     }
 
     @Override
-    public void listen(IConnection connection) {
+    public void listen(IContact contact) {
         System.out.println("listen");
     }
 
     @Override
-    public void onCallReject(IConnection connection) {
+    public void onCallStop(IContact contact) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
+
+
 }
